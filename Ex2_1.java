@@ -14,17 +14,16 @@ import java.util.concurrent.Future;
 public class Ex2_1 {
 
     public static String[] createTextFiles(int n, int seed, int bound) {
-        String s = "Ahalan Shalom\n";
         String[] result = new String[n];
         Random rand = new Random();
         for (int i = 0; i < n; i++) {
             int x = rand.nextInt(bound);
+            String fileName = "file_" + String.valueOf(i + 1);
+            String s = "Ahalan Shalom\n";
             try {
-                String fileName = "file_" + String.valueOf(i + 1);
-                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-                for (int j = 0; j < x; j++) {
-                    writer.append(s);
-                }
+                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+                s = s.repeat(x);
+                writer.write(s);
                 result[i] = fileName;
                 writer.close();
             } catch (Exception e) {
