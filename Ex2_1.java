@@ -2,8 +2,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -123,10 +124,18 @@ public class Ex2_1 {
     }
 
     public static void main(String[] args) {
-        String[] a = createTextFiles(3, 1, 10);
-        System.out.println(Arrays.toString(a));
+        String[] a = createTextFiles(4000, 1, 10);
+        Instant start = Instant.now();
         System.out.println(getNumOfLines(a));
+        Instant finish = Instant.now();
+        System.out.println("getNumOfLines: " + Duration.between(start, finish).toMillis());
+        start = Instant.now();
         System.out.println(getNumOfLinesThreads(a));
+        finish = Instant.now();
+        System.out.println("getNumOfLinesThreads: " + Duration.between(start, finish).toMillis());
+        start = Instant.now();
         System.out.println(getNumOfLinesThreadPool(a));
+        finish = Instant.now();
+        System.out.println("getNumOfLinesThreadPool: " + Duration.between(start, finish).toMillis());
     }
 }
