@@ -79,10 +79,6 @@ public class Ex2_1 {
             threads[i].start();
         }
         for (int i = 0; i < fileNames.length; i++) {
-            threads[i] = new NumLinesThread(fileNames[i]);
-            threads[i].start();
-        }
-        for (int i = 0; i < fileNames.length; i++) {
             try {
                 threads[i].join();
                 result += threads[i].getLines();
