@@ -2,8 +2,14 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Ex2_1 {
 
@@ -88,10 +94,44 @@ public class Ex2_1 {
         return result;
     }
 
+    public static class NumLinesCallable implements Callable<Integer> {
+
+        private String fileName;
+
+        public NumLinesCallable(String fileName) {
+            this.fileName = fileName;
+        }
+
+        @Override
+        public Integer call() {
+            return countLines(fileName);
+        }
+
+    }
+
+    public static int getNumOfLinesThreadPool(String[] fileNames) {
+        int result = 0;
+        ExecutorService threadPool = Executors.newFixedThreadPool(fileNames.length);
+        List<Future<Integer>> list = new ArrayList<Future<Integer>>();
+        for (String fileName : fileNames) {
+            list.add(threadPool.submit(new NumLinesCallable(fileName)));
+        }
+        for (Future<Integer> future : list) {
+            try {
+                result += future.get();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        threadPool.shutdown();
+        return result;
+    }
+
     public static void main(String[] args) {
         String[] a = createTextFiles(3, 1, 10);
         System.out.println(Arrays.toString(a));
         System.out.println(getNumOfLines(a));
         System.out.println(getNumOfLinesThreads(a));
+        System.out.println(getNumOfLinesThreadPool(a));
     }
 }
