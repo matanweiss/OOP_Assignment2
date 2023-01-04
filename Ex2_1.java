@@ -16,7 +16,7 @@ public class Ex2_1 {
 
     public static String[] createTextFiles(int n, int seed, int bound) {
         String[] result = new String[n];
-        Random rand = new Random();
+        Random rand = new Random(seed);
         for (int i = 0; i < n; i++) {
             int x = rand.nextInt(bound);
             String fileName = "file_" + String.valueOf(i + 1);
@@ -124,7 +124,7 @@ public class Ex2_1 {
     }
 
     public static void main(String[] args) {
-        String[] a = createTextFiles(4000, 1, 10);
+        String[] a = createTextFiles(20, 1, 10);
         Instant start = Instant.now();
         System.out.println(getNumOfLines(a));
         Instant finish = Instant.now();
