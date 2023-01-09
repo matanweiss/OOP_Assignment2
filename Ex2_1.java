@@ -14,6 +14,16 @@ import java.util.concurrent.Future;
 
 public class Ex2_1 {
 
+    /**
+     * This method creates text files with the String "Ahalan Shalom" in a random
+     * number of lines
+     * 
+     * @param n     The number of files to be created
+     * @param seed  The initial value of the internal state of the pseudorandom
+     *              number generator
+     * @param bound The maximum number of lines for each file
+     * @return An array of Strings with the created file names
+     */
     public static String[] createTextFiles(int n, int seed, int bound) {
         String[] result = new String[n];
         Random rand = new Random(seed);
@@ -34,6 +44,12 @@ public class Ex2_1 {
         return result;
     }
 
+    /**
+     * This method counts the number of lines of a text file
+     * 
+     * @param fileName The file's name
+     * @return An Integer representing the result
+     */
     public static int countLines(String fileName) {
         int result = 0;
         try {
@@ -47,6 +63,12 @@ public class Ex2_1 {
         return result;
     }
 
+    /**
+     * This method counts the number of lines of multiple files
+     * 
+     * @param fileNames An array of Strings representing the file names
+     * @return An Integer representing the result
+     */
     public static int getNumOfLines(String[] fileNames) {
         int result = 0;
         for (String fileName : fileNames) {
@@ -55,6 +77,9 @@ public class Ex2_1 {
         return result;
     }
 
+    /**
+     * A Thread that counts the number of lines of a file
+     */
     public static class NumLinesThread extends Thread {
         private String fileName;
         private int lines;
@@ -72,6 +97,13 @@ public class Ex2_1 {
         }
     }
 
+    /**
+     * This method counts the number of lines of multiple files using
+     * NumLinesThreads
+     * 
+     * @param An array of Strings representing the file names
+     * @return An Integer representing the result
+     */
     public static int getNumOfLinesThreads(String[] fileNames) {
         int result = 0;
         NumLinesThread[] threads = new NumLinesThread[fileNames.length];
@@ -90,6 +122,9 @@ public class Ex2_1 {
         return result;
     }
 
+    /**
+     * A Callable that counts the number of lines of a file
+     */
     public static class NumLinesCallable implements Callable<Integer> {
 
         private String fileName;
@@ -105,6 +140,13 @@ public class Ex2_1 {
 
     }
 
+    /**
+     * This method counts the number of lines of multiple files using
+     * ThreadPoolExecutor
+     * 
+     * @param An array of Strings representing the file names
+     * @return An Integer representing the result
+     */
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int result = 0;
         ExecutorService threadPool = Executors.newFixedThreadPool(fileNames.length);
